@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecopaso - Zapatos Sostenibles</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fafaf8;
+      color: #2d3436;
+      overflow-x: hidden;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow-auto;
+      background: linear-gradient(135deg, #fafaf8 0%, #f0f9f4 100%);
+    }
+
+    /* Hero Section */
+    .hero {
+      width: 100%;
+      min-height: 600px;
+      background: linear-gradient(135deg, #1b5e3f 0%, #2d8f5e 50%, #3ab870 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 50%;
+      bottom: -50px;
+      left: -50px;
+      animation: float 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(30px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      max-width: 800px;
+      padding: 40px 20px;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      font-weight: 300;
+      margin-bottom: 40px;
+      opacity: 0.95;
+      letter-spacing: 0.5px;
+    }
+
+    .cta-button {
+      background: white;
+      color: #1b5e3f;
+      padding: 16px 48px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Features Section */
+    .features-section {
+      width: 100%;
+      padding: 80px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 60px;
+      color: #1b5e3f;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(27, 94, 63, 0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+      border-top: 4px solid #2d8f5e;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(27, 94, 63, 0.15);
+      border-top-color: #3ab870;
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #2d8f5e 0%, #3ab870 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: white;
+    }
+
+    .feature-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #1b5e3f;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .feature-column {
+      display: grid;
+      gap: 30px;
+    }
+
+    .feature-image {
+      text-align: center;
+    }
+
+    .feature-image img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(27, 94, 63, 0.15);
+      object-fit: cover;
+    }
+
+    /* QR Section */
+    .qr-section {
+      width: 100%;
+      background: linear-gradient(135deg, #ecf9f3 0%, #e0f2ea 100%);
+      padding: 80px 20px;
+    }
+
+    .qr-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 50px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(27, 94, 63, 0.1);
+      text-align: center;
+    }
+
+    .qr-container h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1b5e3f;
+      margin-bottom: 15px;
+    }
+
+    .qr-container p {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 30px 0;
+    }
+
+    #qrcode img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .qr-instruction {
+      margin-top: 30px;
+      font-size: 0.95rem;
+      color: #2d8f5e;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .footer {
+      width: 100%;
+      background: #1b5e3f;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .feature-row {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .qr-container {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/telemetry_sdk.js"></script>
+  <style>body { box-sizing: border-box; }</style>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body>
+  <div class="app-wrapper">
+   <!-- Header Navigation -->
+   <header style="width: 100%; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;">
+    <nav style="max-width: 1200px; margin: 0 auto; padding: 20px; display: flex; align-items: center; justify-content: center;">
+     <div style="font-size: 1.8rem; font-weight: 700; color: #1b5e3f;">
+      👟 Ecopaso
+     </div>
+    </nav>
+   </header><!-- Hero Section -->
+   <section class="hero">
+    <div class="hero-content">
+     <div style="position: relative; z-index: 2; margin-bottom: 20px;">
+      <span style="background: rgba(255,255,255,0.2); color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; display: inline-block; backdrop-filter: blur(10px);">🚀 Próximamente</span>
+     </div>
+     <h1 class="hero-title" id="hero-title">Zapatos Sostenibles para el Futuro</h1>
+     <p class="hero-subtitle" id="hero-subtitle">Camina con conciencia y reduce tu huella de carbono con Ecopaso</p>
+     <p style="position: relative; z-index: 1; color: white; font-size: 1.1rem; margin-bottom: 40px; opacity: 0.9;">Se el primero en descubrir nuestra colección exclusiva</p><button class="cta-button" id="cta-button" onclick="document.getElementById('qr-section').scrollIntoView({behavior: 'smooth'})">Reserva tu Par</button>
+    </div>
+   </section><!-- Features Section -->
+   <section class="features-section" id="features">
+    <h2 class="section-title">✨ Lo Que Te Espera</h2><!-- Row 1: Features Left, Image Right -->
+    <div class="feature-row">
+     <div class="feature-column">
+      <div class="feature-card">
+       <div class="feature-icon">
+        <i data-lucide="leaf" style="width: 32px; height: 32px;"></i>
+       </div>
+       <h3>Materiales 100% Ecológicos</h3>
+       <p>Confeccionados con plástico reciclado del océano y fibras sostenibles.</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        <i data-lucide="sparkles" style="width: 32px; height: 32px;"></i>
+       </div>
+       <h3>Diseños Únicos</h3>
+       <p>Colecciones limitadas diseñadas por artistas internacionales.</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        <i data-lucide="heart" style="width: 32px; height: 32px;"></i>
+       </div>
+       <h3>Ultra Cómodos</h3>
+       <p>Tecnología de amortiguación avanzada para todo el día.</p>
+      </div>
+     </div>
+     <div class="feature-image">
+     </div>
+    </div><!-- Row 2: Image Left, Features Right -->
+    <div class="feature-row">
+     <div class="feature-image">
+     </div>
+     <div class="feature-column">
+      <div class="feature-card">
+       <div class="feature-icon">
+        <i data-lucide="globe" style="width: 32px; height: 32px;"></i>
+       </div>
+       <h3>Impacto Real</h3>
+       <p>Cada par comprado = 1 árbol plantado en Sudamérica.</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        <i data-lucide="zap" style="width: 32px; height: 32px;"></i>
+       </div>
+       <h3>Envío Sostenible</h3>
+       <p>Empaques 100% reciclables con huella de carbono neutra.</p>
+      </div>
+      <div class="feature-card">
+       <div class="feature-icon">
+        <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
+       </div>
+       <h3>Garantía de Calidad</h3>
+       <p>3 años de garantía y devolución sin preguntas.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- CTA Section -->
+   <section style="width: 100%; padding: 80px 20px; text-align: center; background: linear-gradient(135deg, #2d8f5e 0%, #1b5e3f 100%); color: white;">
+    <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 20px;">¿Listo para caminar sostenible?</h2>
+    <p style="font-size: 1.1rem; margin-bottom: 40px; opacity: 0.95;">Descubre nuestras colecciones hoy y sé parte del cambio</p><button style="background: white; color: #1b5e3f; padding: 16px 48px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer; transition: all 0.3s ease;" id="cta-button-2" onclick="document.getElementById('qr-section').scrollIntoView({behavior: 'smooth'})">Compra Ahora</button>
+   </section><!-- QR Section -->
+   <section class="qr-section" id="qr-section">
+    <div class="qr-container">
+    </div>
+   </section><!-- Footer -->
+   <footer class="footer" id="contact">
+    <div style="max-width: 1200px; margin: 0 auto;">
+     <p style="margin-bottom: 20px; font-weight: 600;">👟 Ecopaso - Zapatos Sostenibles para Todos</p>
+     <p>© 2024 Ecopaso. Todos los derechos reservados.</p>
+     <p style="margin-top: 15px; font-size: 0.85rem;">Caminamos por un planeta más verde</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Initialize Element SDK
+    const defaultConfig = {
+      hero_title: "Zapatos Sostenibles para el Futuro",
+      hero_subtitle: "Camina con conciencia y reduce tu huella de carbono con Ecopaso",
+      cta_label: "Reserva tu Par"
+    };
+
+    let config = { ...defaultConfig };
+
+    const element = {
+      defaultConfig,
+      onConfigChange: async (newConfig) => {
+        config = { ...config, ...newConfig };
+        
+        const heroTitle = document.getElementById('hero-title');
+        if (heroTitle) {
+          heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
+        }
+
+        const heroSubtitle = document.getElementById('hero-subtitle');
+        if (heroSubtitle) {
+          heroSubtitle.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+        }
+
+        const ctaButton = document.getElementById('cta-button');
+        if (ctaButton) {
+          ctaButton.textContent = config.cta_label || defaultConfig.cta_label;
+        }
+      },
+
+      mapToCapabilities: (currentConfig) => ({
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+
+      mapToEditPanelValues: (currentConfig) => new Map([
+        ["hero_title", currentConfig.hero_title || defaultConfig.hero_title],
+        ["hero_subtitle", currentConfig.hero_subtitle || defaultConfig.hero_subtitle],
+        ["cta_label", currentConfig.cta_label || defaultConfig.cta_label]
+      ])
+    };
+
+    // Initialize SDK and create icons
+    window.elementSdk?.init(element);
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      
+      // Generate QR Code
+      const qrContainer = document.getElementById('qrcode');
+      const currentUrl = window.location.href;
+      
+      // Clear previous QR if exists
+      qrContainer.innerHTML = '';
+      
+      // Create QR code
+      new QRCode(qrContainer, {
+        text: currentUrl,
+        width: 250,
+        height: 250,
+        colorDark: '#1b5e3f',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a07c5b2c7a04af22',t:'MTc4MDgwMDY5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
